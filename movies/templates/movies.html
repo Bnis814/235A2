@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Movies</title>
+
+    <link
+          rel="stylesheet"
+          href="{{ url_for('static', filename='css/main.css') }}"
+    />
+  </head>
+
+    <body>
+        <header>
+            <h1>Movies</h1>
+        </header>
+        <button class="btn-general" onclick="location.href='/random'">Random</button>
+        <button class="btn-general" onclick="location.href='/list'">List</button>
+        {% if index != 0 %}
+        <button class="btn-general" onclick="location.href='/?index={{index-4}}'">Previous</button>
+        {% endif %}
+        <button class="btn-general" onclick="location.href='/'">Start</button>
+        <button class="btn-general" onclick="location.href='/?index={{index+4}}'">Next</button>
+        <div class="moive">
+            {% for n in my_list %}
+                <h2>{{n.title}}</h2>
+                <p>{{n.description}}</p>
+                <h3>Cast</h3>
+                {% for a in n.actors %}
+                    <li>{{a}}</li>
+                {% endfor %}
+                <h3>Genres</h3>
+                {% for g in n.genres %}
+                        {{g}}
+                        {{ ", " if not loop.last }}
+                {% endfor %}
+            {% endfor %}
+        </div>
+    </body>
+</html>
