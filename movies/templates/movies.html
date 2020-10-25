@@ -12,18 +12,35 @@
   </head>
 
     <body>
-        <header>
+        <div class="top">
+
             <h1>Movies</h1>
-        </header>
-        <button class="btn-general" onclick="location.href='/random'">Random</button>
-        <button class="btn-general" onclick="location.href='/list'">List</button>
-        {% if index != 0 %}
-        <button class="btn-general" onclick="location.href='/?index={{index-4}}'">Previous</button>
-        {% endif %}
-        <button class="btn-general" onclick="location.href='/'">Start</button>
-        <button class="btn-general" onclick="location.href='/?index={{index+4}}'">Next</button>
-        <div class="moive">
+
+            <div class="nav">
+                <button class="btn-general" onclick="location.href='/'">Beginning</button>
+                <button class="btn-general" onclick="location.href='/random'">Random</button>
+                <button class="btn-general" onclick="location.href='/list'">List</button>
+            </div>
+        </div>
+
+
+        {%if disp == "list"%}
+            <div class="movieCont list">
+        {%else%}
+            <div class="move">
+                {% if index != 0 %}
+                <button class="btn-general" onclick="location.href='/?index={{index-3}}'">Previous</button>
+                {% endif %}
+                {% if index != 999 %}
+                <button class="btn-general" onclick="location.href='/?index={{index+3}}'">Next</button>
+                {% endif %}
+            </div>
+            <div class="movieCont">
+        {%endif%}
+
             {% for n in my_list %}
+
+                <div class="movie">
                 <h2>{{n.title}}</h2>
                 <p>{{n.description}}</p>
                 <h3>Cast</h3>
@@ -35,7 +52,13 @@
                         {{g}}
                         {{ ", " if not loop.last }}
                 {% endfor %}
+                </div>
             {% endfor %}
-        </div>
+
+            </div>
+                <div class="count">
+                    {{(index/3)|int}}/333
+                </div>
+
     </body>
 </html>

@@ -1,5 +1,6 @@
 import os
 import random as rand
+import math
 
 from flask import Flask
 from flask import request, render_template, redirect, url_for, session
@@ -26,19 +27,20 @@ def create_app(test_config=None):
         else:
             indexf = int(request.args.get('index'))
         return render_template(
-            'movies.html', my_list=movie_file_reader.dataset_of_movies[indexf:indexf+4], index=indexf
+            'movies.html', my_list=movie_file_reader.dataset_of_movies[indexf:indexf+3], index=indexf, disp="cont"
         )
 
     @app.route('/random')
     def random():
+        randint = rand.randint(0, int(math.floor((len(movie_file_reader.dataset_of_movies)-1)/3))) * 3
         return render_template(
-            'movies.html', my_list=[movie_file_reader.dataset_of_movies[rand.randint(0, len(movie_file_reader.dataset_of_movies)-1)]], index=0
+            'movies.html', my_list=movie_file_reader.dataset_of_movies[randint:randint+3], index=randint, disp="cont"
         )
 
     @app.route('/list')
     def lists():
         return render_template(
-            'movies.html', my_list=movie_file_reader.dataset_of_movies, index=0
+            'movies.html', my_list=movie_file_reader.dataset_of_movies, index=0, disp="list"
         )
 
     return app
